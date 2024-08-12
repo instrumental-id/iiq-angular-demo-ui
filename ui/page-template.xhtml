@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC
+        "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:sp="http://sailpoint.com/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<body>
+<ui:composition>
+    <ui:remove>As far as I can tell, the basename here doesn't actually do anything</ui:remove>
+    <sp:loadBundle basename="sailpoint.web.messages.iiqMessages" var="msgs"/>
+
+    <div id="PluginMainContainer" class="container-fluid">
+
+        <app-root></app-root>
+
+    </div>
+
+    <script src="https://unpkg.com/tslib@2.5.0/tslib.js"/>
+    <script src="#{plugins.requestContextPath}/ui/js/bundles/SailPointBundleLibrary.js"></script>
+
+    <ui:remove>NG INSERT</ui:remove>
+
+
+</ui:composition>
+
+</body>
+</html>

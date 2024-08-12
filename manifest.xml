@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Plugin PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Plugin certificationLevel="None" displayName="IDW Angular Demo" minSystemVersion="8.2" name="IDWAngularDemo" version="%%BUILD_VERSION%%">
+    <Attributes>
+        <Map>
+            <entry key="minUpgradableVersion" value="1.0" />
+            <entry key="fullPage">
+                <value>
+                    <FullPage title="IIQ Angular Demo" />
+                </value>
+            </entry>
+            <entry key="restResources">
+                <value>
+                    <List>
+                        <String>com.identityworksllc.iiq.angulardemo.AngularDemoResource</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="scriptPackages">
+                <value>
+                    <List>
+                        <String>com.identityworksllc.iiq.angulardemo.util</String>
+                    </List>
+                </value>
+            </entry>
+        </Map>
+    </Attributes>
+</Plugin>
+
