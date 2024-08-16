@@ -104,7 +104,7 @@ popd > /dev/null
 
 temp="${TEMP_DIR}/page-temp.xhtml"
 
-greenecho "Generating page.xhtml..."
+greenecho "Generating page.xhtml (bash version)..."
 
 ( sed 's#</body></html>##' ${APP_DIR}/dist/angular-plugin-ui/browser/index.html |
   sed 's#<html><body>##' |

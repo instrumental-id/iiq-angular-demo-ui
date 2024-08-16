@@ -55,7 +55,11 @@ dependencies {
 tasks.register("angularBuild", Exec) {
     workingDir './ui'
 
-    commandLine './ng-build.sh'
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine 'pwsh', 'ng-build.ps1'
+    } else {
+        commandLine './ng-build.sh'
+    }
 }
 
 tasks.register('createPluginZip', Zip) {
