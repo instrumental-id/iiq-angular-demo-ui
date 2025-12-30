@@ -2,3 +2,5 @@ build/
 .gradle/
 .idea/
 lib/identityiq.jar
+.DS_Store
+.vscode/
