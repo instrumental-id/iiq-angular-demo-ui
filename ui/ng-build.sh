@@ -4,6 +4,8 @@ set -eo pipefail
 
 source "./bash-include.sh"
 
+PROJECT_NAME=AngularDemoPlugin
+
 uname=$(uname)
 MAC_SED=no
 
@@ -56,12 +58,8 @@ TEMPLATE="${UI_DIR}/page-template.xhtml"
 JS_DIR="${UI_DIR}/js"
 CSS_DIR="${UI_DIR}/css"
 
-mkdir -p "${JS_DIR}/app"
-mkdir -p "${CSS_DIR}/app"
-
-APP_DIR="${UI_DIR}/app/angular-plugin-ui"
-SRC_DIR="${APP_DIR}/src"
-DIST_DIR="${APP_DIR}/dist/angular-plugin-ui/browser"
+APP_DIR="${UI_DIR}/src/app"
+DIST_DIR="${UI_DIR}/dist/QueryPlugin/browser"
 
 if [[ ! -e "${TEMPLATE}" ]]; then
     redecho "This script must be run with 'ui' as its working directory"
@@ -76,41 +74,54 @@ fi
 dump_config
 
 find "${CSS_DIR}" -name "styles*.css" -delete
-find "${JS_DIR}/app" -delete
+
+if [[ -d "${UI_DIR}/dist" ]]; then
+  find "${UI_DIR}/dist" -delete
+fi
+
+if [[ -d "${JS_DIR}/app" ]]; then
+  find "${JS_DIR}/app"  -delete
+fi
 
 mkdir -p "${JS_DIR}/app"
 
-pushd "${APP_DIR}"
-
-greenecho "Executing Angular build..."
+greenecho "Executing Angular and Typescript builds..."
 
 ( "${NPM}" i && \
   "${NPM}" run ng-dev ) || \
-  { redecho "ERROR: Angular build failed"; exit 2; }
+  { redecho "ERROR: Angular or Typescript build failed"; exit 2; }
 
 if [[ ! -e "${DIST_DIR}" ]]; then
-  redecho "After 'ng build', the '${DIST_DIR}' directory does not seem to exist??"
+  redecho "After 'ng build' and 'tsc', the 'dist/user-viewer-app' directory does not seem to exist??"
   exit 2
+fi
+
+if [[ ! -d "${CSS_DIR}/app" ]]; then
+  mkdir -p "${CSS_DIR}/app"
 fi
 
 greenecho "Copying files to '${JS_DIR}/app' directories..."
 
-cp -rf "${DIST_DIR}"/assets/* "${JS_DIR}/app/"
-cp -r "${DIST_DIR}"/*.js "${JS_DIR}/app/"
-cp "${DIST_DIR}"/styles*.css "${CSS_DIR}/app/"
-cp "${DIST_DIR}"/styles*.css.map "${CSS_DIR}/app/"
+if [[ -d "${DIST_DIR}/assets" ]]; then
+  cp -r "${DIST_DIR}"/assets/* "${JS_DIR}/app/"
+fi
+cp "${DIST_DIR}"/*.js "${JS_DIR}/app"
+cp "${DIST_DIR}"/*.js.map "${JS_DIR}/app"
+cp "${DIST_DIR}"/styles*.css "${CSS_DIR}/app"
+cp "${DIST_DIR}"/styles*.css.map "${CSS_DIR}/app"
 
-popd > /dev/null
+greenecho "Transforming Javascript files for plugin purposes..."
 
 temp="${TEMP_DIR}/page-temp.xhtml"
 
-greenecho "Generating page.xhtml (bash version)..."
+greenecho "Generating page.xhtml..."
 
-( sed 's#</body></html>##' ${APP_DIR}/dist/angular-plugin-ui/browser/index.html |
+( sed 's#</body></html>##' ${UI_DIR}/dist/QueryPlugin/browser/index.html |
   sed 's#<html><body>##' |
-  sed 's(src="(src="#{plugins.requestContextPath}/plugin/IDWAngularDemo/ui/js/app/(g' |
-  sed 's(href="(href="#{plugins.requestContextPath}/plugin/IDWAngularDemo/ui/css/app/(g' |
-  sed 's#\(<link.*>\)#\1</link>#g' > ${temp} ) || \
+  sed 's(src="(src="#{plugins.requestContextPath}/plugin/PLUGIN_NAME/ui/js/app/(g' |
+  sed 's(href="(href="#{plugins.requestContextPath}/plugin/PLUGIN_NAME/ui/css/app/(g' |
+  sed 's#\(<link.*css">\)#\1</link>#g' |
+  sed "s#PLUGIN_NAME#${PLUGIN_NAME}#"> ${temp} ) || \
   { redecho "ERROR: 'sed' substitution failed"; exit 2; }
 
 

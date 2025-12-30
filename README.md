@@ -1,6 +1,6 @@
 # Building
 
-You *MUST* build in a Bash-like environment. We can adjust this later, if needed.
+You *MUST* build in a Bash-like environment. Windows Git-bash does not appear to work. We can adjust this later, if needed.
 
 1. Install Node.js, minimum version 20. The `nvm` toolset is useful for this. Ensure that `npm` and `npx` are on your execution path.
 
