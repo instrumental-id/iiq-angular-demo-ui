@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE Plugin PUBLIC "sailpoint.dtd" "sailpoint.dtd">
-<Plugin certificationLevel="None" displayName="IDW Angular Demo" minSystemVersion="8.2" name="IDWAngularDemo" version="%%BUILD_VERSION%%">
+<Plugin certificationLevel="None" displayName="IID Angular Example" minSystemVersion="8.2" name="InstrumentalIDAngularExample" version="%%BUILD_VERSION%%">
     <Attributes>
         <Map>
             <entry key="minUpgradableVersion" value="1.0" />
             <entry key="fullPage">
                 <value>
-                    <FullPage title="IIQ Angular Demo" />
+                    <FullPage title="IIQ Angular Example" />
                 </value>
             </entry>
             <entry key="restResources">

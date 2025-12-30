@@ -2,3 +2,5 @@ page.xhtml
 js/app/*
 css/app/*
 node_modules/
+.angular/
+dist/
